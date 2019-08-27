@@ -1,8 +1,11 @@
 import { createStore } from 'redux';
+import { addListener } from 'expo/build/Updates/Updates';
 //el state no puede ser undefined, se define una data
 const initialState = {
     counter: 0,
-    tablero: []
+    turnPlayer: true,
+    boxes: ['0', '1', '2', '3', '4', '5','6','7','8'],
+    plays: ['', '', '', '', '', '', '', '', '']
 }
 
 
@@ -14,8 +17,17 @@ const reducer = (state = initialState, action) => {
             counter: action.counter+1 
         })
         
-        case "sdsa":
-            return state;
+        case 'CHANGE_PLAYER':
+            let newPlay = [...state.plays]
+            let turnPlayer = action.turnPlayer
+            if(newPlay[action.boxIndex] === ''){
+                turnPlayer = !turnPlayer
+                newPlay[action.boxIndex] = action.turnPlayer ? 'x' : 'O'
+            }
+            return Object.assign({},state,{
+                turnPlayer: turnPlayer,
+                plays: newPlay
+            })
 
         default:
             return state

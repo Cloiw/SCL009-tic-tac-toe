@@ -6,7 +6,7 @@ const Btn = ({counter, increaseCounter}) =>(
   <View style={styles.container}>
     <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
       <TouchableOpacity onPress={()=>increaseCounter(counter)}>
-      <Text style={{fontSize: 10}}>Aumentanding</Text>
+      <Text>Aumentanding</Text>
       </TouchableOpacity>
         <Text>{counter}</Text>
     </View>
@@ -35,8 +35,7 @@ const mapDispatchToProps = dispatch => ({ //dispatch recibe un objeto, un type -
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 5
+      justifyContent: 'center'
     },
   });
   
