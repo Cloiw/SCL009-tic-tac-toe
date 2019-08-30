@@ -3,10 +3,10 @@
 
 import { StyleSheet, Text, View,TouchableHighlight} from 'react-native';
 
-const BoardBox = ({numberId, turnPlayer, changePlayer,plays}) => {
+const BoardBox = ({numberId, PlayersTurn, changePlayer,plays}) => {
 
     return (
-    <TouchableHighlight style={styles.button} onPress={()=>changePlayer(turnPlayer,numberId)} underlayColor="white">
+    <TouchableHighlight style={styles.button} onPress={()=>changePlayer(PlayersTurn,numberId)} underlayColor="white">
        
             <Text>{plays[numberId]} </Text>
         
@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-    turnPlayer: state.turnPlayer,
+    PlayersTurn: state.PlayersTurn,
     plays : state.plays
 })
 
 const mapDispatchToProps = dispatch => ({ //dispatch recibe un objeto, un type -> indentificador
-    changePlayer(turnPlayer, boxIndex){
+    changePlayer(PlayersTurn, boxIndex){
         dispatch({
             type:'CHANGE_PLAYER',
-            turnPlayer : turnPlayer,
+            PlayersTurn : PlayersTurn,
             boxIndex : boxIndex
         })
     }
