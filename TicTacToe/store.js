@@ -37,14 +37,6 @@ const reducer = (state = initialState, action) => {
             let winnerPlay = action.winnerPlay;
             let checkPlays = [...state.plays];
             
-            for(let i=0; checkPlays.length > i; i++){
-                console.log(checkPlays[i])
-                if(checkPlays[i] === ""){
-                    draw = false;
-                }else{
-                    draw = true;
-                }
-            }
             switch(true){
                 case (checkPlays.slice(0,3).join('') === "XXX" || checkPlays.slice(0,3).join('') === "OOO"):
                     winner = true;
@@ -70,6 +62,15 @@ const reducer = (state = initialState, action) => {
                 case ([checkPlays[2],checkPlays[4],checkPlays[6]].join('') === "XXX" || [checkPlays[2],checkPlays[4],checkPlays[6]].join('') === "OOO"):
                     winner = true;
                     winnerPlay = "diagSecond"
+            }
+
+            for(let i=0; checkPlays.length > i; i++){
+                if(checkPlays[i] === ""){
+                    draw = false;
+                }
+                if(checkPlays.join("").length === 9 && !winner ){
+                    draw = true;
+                } 
             }
 
             return Object.assign({},state,{ 

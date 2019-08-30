@@ -11,7 +11,7 @@ class App extends Component {
     return (
     <Provider store={store}>
      
-      <Btn/>
+
       <Board/>
     </Provider>
     )

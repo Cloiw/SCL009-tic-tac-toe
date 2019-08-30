@@ -12,23 +12,23 @@ const Board = ({checkWinner, winner, draw, winnerPlay, playersTurn}) => {
     <View>
         {winner && <Text>"wiins"</Text>}
         {draw && <Text>"empateeedsafdsa"</Text>}
-        <Text>{playersTurn ? "turno de x" : "turno de O"}</Text>
+        <Text>{playersTurn ? 'turno de x' : 'turno de O'}</Text>
         
         <View style={styles.boardContainer}>
-            <View>
-                <BoardBox numberId="0"/>
-                <BoardBox numberId="3"/>
-                <BoardBox numberId="6"/>
+            <View style = {{borderColor: '#47479a', borderRightWidth: 4}}>
+                <BoardBox border = {styles.borderBox} numberId ='0' />
+                <BoardBox border = {styles.borderBox} numberId = '3'/>
+                <BoardBox numberId= '6' />
+            </View>
+            <View  style = {{borderColor: '#47479a', borderRightWidth: 4}}>
+                <BoardBox border = {styles.borderBox} numberId = '1' />
+                <BoardBox border = {styles.borderBox} numberId = '4'/>
+                <BoardBox numberId= '7' />
             </View>
             <View>
-                <BoardBox numberId="1"/>
-                <BoardBox numberId="4"/>
-                <BoardBox numberId="7"/>
-            </View>
-            <View>
-                <BoardBox numberId="2"/>
-                <BoardBox numberId="5"/>
-                <BoardBox numberId="8"/>
+                <BoardBox border = {styles.borderBox} numberId = '2' />
+                <BoardBox border = {styles.borderBox} numberId = '5' />
+                <BoardBox numberId = '8' />
             </View>
         </View>
     </View>
@@ -38,22 +38,17 @@ const Board = ({checkWinner, winner, draw, winnerPlay, playersTurn}) => {
 
 const styles = StyleSheet.create({
     boardContainer: {
-        display: 'flex',
+        flex: 1,
         flexDirection: 'row',
         width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        justifyItems: 'center',
-        margin:20
-        
     },
-    board: {
-        flex: 1,
-        margin: 10,
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    borderBox: {
+        borderColor: '#47479a',
+        borderBottomWidth: 4
+    }
 });
 const mapDispatchToProps = dispatch => ({ //dispatch recibe un objeto, un type -> indentificador
     checkWinner(winner, winnerPlay, draw){

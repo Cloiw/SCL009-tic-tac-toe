@@ -1,15 +1,18 @@
  import React  from 'react';
  import { connect } from 'react-redux';
 
-import { StyleSheet, Text, View,TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, View,TouchableHighlight, Image} from 'react-native';
 
-const BoardBox = ({numberId, playersTurn, changePlayer,plays}) => {
-
+const BoardBox = ({border, numberId, playersTurn, changePlayer,plays}) => {
+    
     return (
-    <TouchableHighlight style={styles.button} onPress={()=>changePlayer(playersTurn,numberId)} underlayColor="white">
-       
-            <Text>{plays[numberId]} </Text>
-        
+    <TouchableHighlight style={border} onPress={()=>changePlayer(playersTurn,numberId)} underlayColor="white">
+       <Image
+          resizeMode={'cover'}
+          style={styles.img}
+          source={plays[numberId] == "X" ? require('../img/x_img.png') : plays[numberId] == "O" ? require('../img/o_img.png') :"" }
+          
+        />
     </TouchableHighlight>
     )
 }
@@ -17,10 +20,15 @@ const BoardBox = ({numberId, playersTurn, changePlayer,plays}) => {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 70,
+        width: 50, 
+        height: 50,
         margin:5,
-        backgroundColor: 'red',
     },
+    img: {
+        margin: 5,
+        width: 50, 
+        height: 50,
+    }
 });
 
 
