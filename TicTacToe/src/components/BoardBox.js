@@ -1,33 +1,35 @@
- import React  from 'react';
- import { connect } from 'react-redux';
-
+import React  from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View,TouchableHighlight, Image} from 'react-native';
 
-const BoardBox = ({border, numberId, playersTurn, changePlayer,plays}) => {
+const BoardBox = ({numberId, playersTurn, changePlayer,plays}) => {
     
     return (
-    <TouchableHighlight style={border} onPress={()=>changePlayer(playersTurn,numberId)} underlayColor="white">
-       <Image
-          resizeMode={'cover'}
-          style={styles.img}
-          source={plays[numberId] == "X" ? require('../img/x_img.png') : plays[numberId] == "O" ? require('../img/o_img.png') :"" }
-          
-        />
-    </TouchableHighlight>
+        <TouchableHighlight style={styles.box} onPress={()=>changePlayer(playersTurn,numberId)} underlayColor="white">
+            <Image
+                resizeMode={'cover'}
+                style={styles.img}
+                source={plays[numberId] == "X" ? require('../img/x_img.png') : plays[numberId] == "O" ? require('../img/o_img.png') :"" }
+            />
+        </TouchableHighlight>
     )
 }
 
 
 const styles = StyleSheet.create({
-    button: {
-        width: 50, 
-        height: 50,
-        margin:5,
+    box:{
+        width: 120,
+        margin: 5, 
+        borderRadius:10, 
+        backgroundColor: 'rgba(0,0,0,0.5)'
     },
     img: {
-        margin: 5,
-        width: 50, 
-        height: 50,
+        margin: 10,
+        flex: 1,
+        width: 100,
+        height: 100,
+        aspectRatio: 1
+        
     }
 });
 
