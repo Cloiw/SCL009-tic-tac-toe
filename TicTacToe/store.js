@@ -3,11 +3,12 @@ import { createStore } from 'redux';
 //el state no puede ser undefined, se define una data
 const initialState = {
     counter: 0,
-    PlayersTurn: true,
-    boxes: ['0', '1', '2', '3', '4', '5','6','7','8'],
-    plays: ['', '', '', '', '', '', '', '', '']
+    plays: ['', '', '', '', '', '', '', '', ''],
+    playersTurn: true,
+    winner: false,
+    draw: false,
+    winnerPlay: ""
 }
-
 
 //funcion reductora recibe data y un objeto action
 const reducer = (state = initialState, action) => {
@@ -19,21 +20,67 @@ const reducer = (state = initialState, action) => {
         
         case 'CHANGE_PLAYER':
             let newPlay = [...state.plays]
-            let PlayersTurn = action.PlayersTurn
-            console.log([newPlay[0],newPlay[4],newPlay[8]].join(''))
-          
+            let playersTurn = action.playersTurn
+            
             if(newPlay[action.boxIndex] === ''){
-                PlayersTurn = !PlayersTurn
-                newPlay[action.boxIndex] = action.PlayersTurn ? 'X' : 'O'
+                playersTurn = !playersTurn
+                newPlay[action.boxIndex] = action.playersTurn ? 'X' : 'O'
             }
             return Object.assign({},state,{
-                PlayersTurn: PlayersTurn,
+                playersTurn: playersTurn,
                 plays: newPlay
+            })
+        
+        case 'CHECK_WINNER':
+            let winner = action.winner;
+            let draw = action.draw;
+            let winnerPlay = action.winnerPlay;
+            let checkPlays = [...state.plays];
+            
+            for(let i=0; checkPlays.length > i; i++){
+                console.log(checkPlays[i])
+                if(checkPlays[i] === ""){
+                    draw = false;
+                }else{
+                    draw = true;
+                }
+            }
+            switch(true){
+                case (checkPlays.slice(0,3).join('') === "XXX" || checkPlays.slice(0,3).join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "rowFirst"
+                case (checkPlays.slice(3,6).join('') === "XXX" || checkPlays.slice(3,6).join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "rowSecond"
+                case (checkPlays.slice(6,9).join('') === "XXX" || checkPlays.slice(6,9).join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "rowThird"
+                case ([checkPlays[0],checkPlays[3],checkPlays[6]].join('') === "XXX" || [checkPlays[0],checkPlays[3],checkPlays[6]].join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "colFirst"
+                case ([checkPlays[1],checkPlays[4],checkPlays[7]].join('') === "XXX" || [checkPlays[1],checkPlays[4],checkPlays[7]].join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "colSecond"
+                case ([checkPlays[2],checkPlays[5],checkPlays[8]].join('') === "XXX" || [checkPlays[2],checkPlays[5],checkPlays[8]].join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "colThird"
+                case ([checkPlays[0],checkPlays[4],checkPlays[8]].join('') === "XXX" || [checkPlays[0],checkPlays[4],checkPlays[8]].join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "diagFirst"
+                case ([checkPlays[2],checkPlays[4],checkPlays[6]].join('') === "XXX" || [checkPlays[2],checkPlays[4],checkPlays[6]].join('') === "OOO"):
+                    winner = true;
+                    winnerPlay = "diagSecond"
+            }
+
+            return Object.assign({},state,{ 
+                winner: winner,
+                winnerPlay: winnerPlay,
+                draw: draw
             })
 
         default:
             return state
-      }
+    }
 }
 
 //recibe funcion reductora 

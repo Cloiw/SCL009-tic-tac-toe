@@ -4,41 +4,15 @@ import { StyleSheet, Text, View,TouchableHighlight} from 'react-native';
 import BoardBox from './BoardBox'
 
 
-const Board = (props) => {
-    let win = false;
-    let winnerPlay = "";
-
-    switch(true){
-        case (props.plays.slice(0,3).join('') === "XXX" || props.plays.slice(0,3).join('') === "OOO"):
-            win = true;
-            winnerPlay = "rowFirst"
-        case (props.plays.slice(3,6).join('') === "XXX" || props.plays.slice(3,6).join('') === "OOO"):
-            win = true;
-            winnerPlay = "rowSecond"
-        case (props.plays.slice(6,9).join('') === "XXX" || props.plays.slice(6,9).join('') === "OOO"):
-            win = true;
-            winnerPlay = "rowThird"
-        case ([props.plays[0],props.plays[3],props.plays[6]].join('') === "XXX" || [props.plays[0],props.plays[3],props.plays[6]].join('') === "OOO"):
-            win = true;
-            winnerPlay = "colFirst"
-        case ([props.plays[1],props.plays[4],props.plays[7]].join('') === "XXX" || [props.plays[1],props.plays[4],props.plays[7]].join('') === "OOO"):
-            win = true;
-            winnerPlay = "colSecond"
-        case ([props.plays[2],props.plays[5],props.plays[8]].join('') === "XXX" || [props.plays[2],props.plays[5],props.plays[8]].join('') === "OOO"):
-            win = true;
-            winnerPlay = "colThird"
-        case ([props.plays[0],props.plays[4],props.plays[8]].join('') === "XXX" || [props.plays[0],props.plays[4],props.plays[8]].join('') === "OOO"):
-            win = true;
-            winnerPlay = "diagFirst"
-        case ([props.plays[2],props.plays[4],props.plays[6]].join('') === "XXX" || [props.plays[2],props.plays[4],props.plays[6]].join('') === "OOO"):
-            win = true;
-            winnerPlay = "diagSecond"
-    }
-
+const Board = ({checkWinner, winner, draw, winnerPlay, playersTurn}) => {
+    
+    checkWinner(winner,winnerPlay,draw)
     return (
+       
     <View>
-        {win && <Text>"wiins"</Text>}
-        <Text>{props.PlayersTurn ? "turno de x" : "turno de O"}</Text>
+        {winner && <Text>"wiins"</Text>}
+        {draw && <Text>"empateeedsafdsa"</Text>}
+        <Text>{playersTurn ? "turno de x" : "turno de O"}</Text>
         
         <View style={styles.boardContainer}>
             <View>
@@ -81,13 +55,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+const mapDispatchToProps = dispatch => ({ //dispatch recibe un objeto, un type -> indentificador
+    checkWinner(winner, winnerPlay, draw){
+        dispatch({
+            type:'CHECK_WINNER',
+            winner: winner,
+            draw: draw,
+            winnerPlay: winnerPlay
+        })
+    }
+})
 
 const mapStateToProps = state => ({
-    boxes: state.boxes,
+    winner: state.winner,
     counter: state.counter,
-    PlayersTurn: state.PlayersTurn,
+    draw: state.draw,
+    winnerPlay: state.winnerPlay,
+    playersTurn: state.playersTurn,
     plays: state.plays
 })
 
 
-export default connect(mapStateToProps, {}) (Board);
+export default connect(mapStateToProps, mapDispatchToProps) (Board);
